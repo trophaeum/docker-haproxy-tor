@@ -1,6 +1,6 @@
-FROM alpine
+FROM alpine:edge
 
-RUN apk --update add tor haproxy ruby \
+RUN apk update && apk upgrade && apk --update add tor haproxy ruby \
   && apk --update add --virtual build-dependencies ruby-bundler ruby-dev ruby-nokogiri \
   && gem install --no-ri --no-rdoc socksify \
   && apk del build-dependencies \

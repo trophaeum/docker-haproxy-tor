@@ -3,7 +3,9 @@ require 'erb'
 require 'socksify/http'
 require 'logger'
 
-$logger = Logger.new(STDOUT, ENV['DEBUG'] ? Logger::DEBUG : Logger::INFO)
+$logger = Logger.new(STDOUT,  Logger::DEBUG)
+#: Logger::INFO)
+#$logger = Logger.new(STDOUT, ENV['DEBUG'] ? Logger::DEBUG : Logger::INFO)
 
 module Service
   class Base
@@ -121,7 +123,7 @@ module Service
 
     def restart
       stop
-      sleep 5
+      sleep(5)
       start
     end
 
@@ -202,7 +204,7 @@ end
 
 haproxy.start
 
-sleep 60
+sleep(60)
 
 loop do
   $logger.info "testing proxies"
@@ -210,9 +212,9 @@ loop do
     $logger.info "testing proxy #{proxy.id} (port #{proxy.port})"
     proxy.restart unless proxy.working?
     $logger.info "sleeping for #{tor_instances} seconds"
-    sleep tor_instances
+    sleep(tor_instances.to_i)
   end
 
   $logger.info "sleeping for 60 seconds"
-  sleep 60
+  sleep(60)
 end
